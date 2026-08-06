@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VA Program Process Improvement Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #112240;
+    --navy-light: #1a3a5c;
+    --teal: #0d9488;
+    --teal-light: #14b8a6;
+    --gold: #d4a843;
+    --gold-light: #f0c96e;
+    --cream: #faf8f2;
+    --text-primary: #1a1a2e;
+    --text-secondary: #4a5568;
+    --text-muted: #718096;
+    --border: #e2e8f0;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text-primary);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* ─── COVER PAGE ─── */
+  .cover {
+    background: var(--navy);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+  }
+
+  .cover-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(13,148,136,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(13,148,136,0.07) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  .cover-accent-bar {
+    width: 6px; height: 100vh;
+    background: linear-gradient(180deg, var(--teal), var(--gold));
+    position: absolute; left: 0; top: 0;
+  }
+
+  .cover-top {
+    padding: 48px 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative; z-index: 2;
+  }
+
+  .org-badge {
+    background: rgba(13,148,136,0.15);
+    border: 1px solid rgba(13,148,136,0.3);
+    color: var(--teal-light);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 8px 18px;
+    border-radius: 4px;
+  }
+
+  .report-date {
+    color: rgba(255,255,255,0.35);
+    font-size: 12px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 1px;
+    margin-top: 6px;
+  }
+
+  .cover-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 64px;
+    position: relative; z-index: 2;
+  }
+
+  .cover-label {
+    color: var(--teal-light);
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .cover-label::before {
+    content: '';
+    display: block;
+    width: 32px; height: 1px;
+    background: var(--teal);
+  }
+
+  .cover-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 58px;
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 8px;
+    max-width: 720px;
+  }
+
+  .cover-title span {
+    color: var(--gold-light);
+  }
+
+  .cover-subtitle {
+    font-size: 18px;
+    color: rgba(255,255,255,0.55);
+    font-weight: 300;
+    max-width: 560px;
+    margin-top: 20px;
+    line-height: 1.6;
+  }
+
+  .cover-divider {
+    width: 80px; height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--teal));
+    margin: 32px 0;
+    border-radius: 2px;
+  }
+
+  .cover-meta {
+    display: flex;
+    gap: 48px;
+    margin-top: 8px;
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .meta-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .meta-value {
+    font-size: 14px;
+    color: rgba(255,255,255,0.75);
+    font-weight: 500;
+  }
+
+  .cover-bottom {
+    padding: 40px 64px;
+    position: relative; z-index: 2;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .cover-tag {
+    padding: 6px 14px;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 100px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 1px;
+  }
+
+  .cover-circle {
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(13,148,136,0.12), transparent 70%);
+    position: absolute;
+    right: -100px; top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  .cover-circle-2 {
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    border: 1px solid rgba(212,168,67,0.15);
+    position: absolute;
+    right: 80px; top: 25%;
+    pointer-events: none;
+  }
+
+  /* ─── MAIN CONTENT ─── */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 40px 80px;
+  }
+
+  /* ─── TABLE OF CONTENTS ─── */
+  .toc-section {
+    background: var(--navy);
+    padding: 64px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .toc-bg {
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 20px,
+      rgba(255,255,255,0.01) 20px,
+      rgba(255,255,255,0.01) 21px
+    );
+  }
+
+  .toc-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative; z-index: 2;
+  }
+
+  .toc-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--teal-light);
+    margin-bottom: 32px;
+    font-weight: 400;
+  }
+
+  .toc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+  }
+
+  .toc-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 20px;
+    border-radius: 6px;
+    transition: background 0.2s;
+    cursor: default;
+    text-decoration: none;
+  }
+
+  .toc-item:hover {
+    background: rgba(255,255,255,0.05);
+  }
+
+  .toc-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    min-width: 24px;
+  }
+
+  .toc-text {
+    font-size: 14px;
+    color: rgba(255,255,255,0.65);
+    font-weight: 400;
+  }
+
+  .toc-dot {
+    flex: 1;
+    border-bottom: 1px dashed rgba(255,255,255,0.1);
+    margin: 0 8px;
+  }
+
+  /* ─── SECTION HEADERS ─── */
+  .section-wrap {
+    padding: 56px 0 0;
+  }
+
+  .section-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-eyebrow::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--teal), transparent);
+    opacity: 0.3;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .section-intro {
+    font-size: 15px;
+    color: var(--text-secondary);
+    max-width: 720px;
+    line-height: 1.8;
+    margin-bottom: 36px;
+    border-left: 3px solid var(--teal);
+    padding-left: 20px;
+  }
+
+  p {
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+
+  /* ─── CALLOUT BOXES ─── */
+  .callout {
+    background: var(--navy);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin: 32px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .callout::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, var(--teal), var(--gold));
+  }
+
+  .callout-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    color: var(--white);
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  .callout p {
+    color: rgba(255,255,255,0.6);
+    font-size: 14px;
+    margin: 0;
+  }
+
+  .callout.gold::before {
+    background: linear-gradient(180deg, var(--gold), var(--teal));
+  }
+
+  /* ─── PROBLEM CARDS ─── */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 32px 0;
+  }
+
+  .problem-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    position: relative;
+    transition: box-shadow 0.2s;
+  }
+
+  .problem-card:hover {
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  }
+
+  .problem-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+
+  .problem-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+
+  .problem-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .problem-card .icon-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--teal);
+    position: absolute;
+    top: 24px; right: 24px;
+  }
+
+  .problem-card.warn .icon-dot { background: #e8a03b; }
+  .problem-card.danger .icon-dot { background: #e05252; }
+
+  /* ─── DIAGRAM WRAPPERS ─── */
+  .diagram-wrap {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px 32px;
+    margin: 32px 0;
+    overflow: hidden;
+  }
+
+  .diagram-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+    text-align: center;
+  }
+
+  /* ─── FLOW DIAGRAM: CURRENT STATE ─── */
+  .flow-current {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    align-items: center;
+  }
+
+  .flow-step {
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #856404;
+    text-align: center;
+    width: 260px;
+    position: relative;
+  }
+
+  .flow-step.interrupt {
+    background: #fde8e8;
+    border-color: #e05252;
+    color: #842020;
+    width: 320px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .interrupt-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: #e05252;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+
+  .flow-arrow {
+    width: 2px; height: 20px;
+    background: linear-gradient(180deg, #d1d5db, #9ca3af);
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+
+  .flow-arrow::after {
+    content: '';
+    width: 0; height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 7px solid #9ca3af;
+    position: absolute;
+    bottom: -7px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* ─── FLOW DIAGRAM: PROPOSED STATE ─── */
+  .proposed-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .pf-row {
+    display: flex;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  .pf-node {
+    flex: 1;
+    background: linear-gradient(135deg, var(--navy), var(--navy-light));
+    border: 1px solid rgba(13,148,136,0.25);
+    border-radius: 10px;
+    padding: 16px 20px;
+    text-align: center;
+  }
+
+  .pf-node-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--teal-light);
+    margin-bottom: 6px;
+  }
+
+  .pf-node-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--white);
+  }
+
+  .pf-connector {
+    width: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--teal-light);
+    font-size: 18px;
+    font-weight: 300;
+  }
+
+  /* ─── TRAINING TIMELINE ─── */
+  .timeline-wrap {
+    position: relative;
+    padding: 8px 0;
+    margin: 32px 0;
+  }
+
+  .timeline-track {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    position: relative;
+  }
+
+  .timeline-phase {
+    flex: 1;
+    position: relative;
+  }
+
+  .timeline-bar {
+    height: 44px;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+    position: relative;
+    z-index: 1;
+  }
+
+  .timeline-phase:first-child .timeline-bar { border-radius: 8px 0 0 8px; }
+  .timeline-phase:last-child .timeline-bar { border-radius: 0 8px 8px 0; }
+
+  .phase-1 { background: linear-gradient(90deg, #0d9488, #0f766e); }
+  .phase-2 { background: linear-gradient(90deg, #0f766e, #d4a843); }
+  .phase-3 { background: linear-gradient(90deg, #d4a843, #b8891e); }
+  .phase-4 { background: linear-gradient(90deg, #b8891e, #0a1628); }
+
+  .timeline-label {
+    text-align: center;
+    padding: 10px 4px 0;
+  }
+
+  .tl-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .tl-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .tl-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 100px;
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    margin-top: 4px;
+  }
+
+  .badge-unpaid { background: #fee2e2; color: #991b1b; }
+  .badge-stipend { background: #fef9c3; color: #854d0e; }
+  .badge-paid { background: #d1fae5; color: #065f46; }
+
+  /* ─── ARCHITECTURE DIAGRAM ─── */
+  .arch-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .arch-central {
+    background: linear-gradient(135deg, var(--navy), var(--navy-light));
+    border: 2px solid var(--teal);
+    border-radius: 16px;
+    padding: 24px 48px;
+    text-align: center;
+    box-shadow: 0 0 32px rgba(13,148,136,0.2);
+  }
+
+  .arch-central-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--teal-light);
+    margin-bottom: 6px;
+  }
+
+  .arch-central-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--white);
+    font-weight: 700;
+  }
+
+  .arch-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .arch-connector-v {
+    width: 2px; height: 24px;
+    background: var(--teal);
+    opacity: 0.4;
+    margin: 0 auto;
+  }
+
+  .arch-connector-h-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+    height: 2px;
+    margin: 4px 0;
+  }
+
+  .arch-connector-h {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--teal), transparent);
+    opacity: 0.3;
+  }
+
+  .arch-module {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    text-align: center;
+    flex: 1;
+    min-width: 120px;
+  }
+
+  .arch-module-icon {
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    margin: 0 auto 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+  }
+
+  .ic-teal { background: var(--teal); }
+  .ic-gold { background: var(--gold); }
+  .ic-navy { background: var(--navy); }
+  .ic-purple { background: #7c3aed; }
+  .ic-rose { background: #e11d48; }
+  .ic-blue { background: #2563eb; }
+
+  .arch-module-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 2px;
+  }
+
+  .arch-module-sub {
+    font-size: 10px;
+    color: var(--text-muted);
+  }
+
+  /* ─── LISTS ─── */
+  .styled-list {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 24px;
+  }
+
+  .styled-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  .styled-list li:last-child { border-bottom: none; }
+
+  .list-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--teal);
+    margin-top: 7px;
+    flex-shrink: 0;
+  }
+
+  /* ─── RECOMMENDATION CARDS ─── */
+  .rec-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 32px;
+    margin: 24px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .rec-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--teal), var(--gold));
+  }
+
+  .rec-num-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: var(--navy);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--teal-light);
+    margin-bottom: 12px;
+  }
+
+  .rec-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 12px;
+  }
+
+  .rec-body {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+
+  /* ─── OUTCOMES TABLE ─── */
+  .outcomes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin: 32px 0;
+  }
+
+  .outcome-cell {
+    background: var(--navy);
+    border-radius: 12px;
+    padding: 24px 20px;
+    text-align: center;
+  }
+
+  .outcome-metric {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--gold-light);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .outcome-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.5;
+  }
+
+  /* ─── COMPARISON TABLE ─── */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 13.5px;
+  }
+
+  .compare-table th {
+    background: var(--navy);
+    color: var(--white);
+    padding: 14px 20px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .compare-table th:first-child { border-radius: 8px 0 0 0; }
+  .compare-table th:last-child { border-radius: 0 8px 0 0; }
+
+  .compare-table td {
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+    vertical-align: top;
+  }
+
+  .compare-table tr:nth-child(even) td {
+    background: #f8fafc;
+  }
+
+  .compare-table .current { color: #dc2626; font-weight: 500; }
+  .compare-table .proposed { color: #059669; font-weight: 500; }
+
+  /* ─── FOOTER ─── */
+  .page-footer {
+    background: var(--navy);
+    padding: 40px 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 80px;
+  }
+
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--white);
+  }
+
+  .footer-note {
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    max-width: 360px;
+    text-align: right;
+    line-height: 1.6;
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 40px 0;
+  }
+
+  /* ─── INTERVIEW FLOW ─── */
+  .interview-flow {
+    display: flex;
+    gap: 0;
+    margin: 24px 0;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+  }
+
+  .if-step {
+    flex: 1;
+    padding: 20px 16px;
+    text-align: center;
+    position: relative;
+  }
+
+  .if-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 50%;
+    transform: translateY(-50%);
+    width: 0; height: 0;
+    border-top: 14px solid transparent;
+    border-bottom: 14px solid transparent;
+    z-index: 2;
+  }
+
+  .if-s1 { background: #f0fdfa; }
+  .if-s1::after { border-left: 14px solid #f0fdfa; }
+  .if-s2 { background: #f0fdf4; }
+  .if-s2::after { border-left: 14px solid #f0fdf4; }
+  .if-s3 { background: #fffbeb; }
+  .if-s3::after { border-left: 14px solid #fffbeb; }
+  .if-s4 { background: #fef3c7; }
+  .if-s4::after { border-left: 14px solid #fef3c7; }
+  .if-s5 { background: #eff6ff; }
+
+  .if-num {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: var(--white);
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 8px;
+  }
+
+  .if-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+
+  .if-desc {
+    font-size: 10px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  /* ─── NOTIFICATION COMPARISON ─── */
+  .notif-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 24px 0;
+  }
+
+  .notif-box {
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid var(--border);
+  }
+
+  .notif-box.bad { background: #fff5f5; border-color: #fecaca; }
+  .notif-box.good { background: #f0fdfa; border-color: #a7f3d0; }
+
+  .notif-box-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .notif-box.bad .notif-box-title { color: #dc2626; }
+  .notif-box.good .notif-box-title { color: #059669; }
+
+  .notif-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+
+  .notif-item:last-child { border-bottom: none; }
+
+  .ni-icon {
+    width: 16px; height: 16px;
+    border-radius: 3px;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px;
+    font-weight: 700;
+    color: white;
+    margin-top: 1px;
+  }
+
+  .ic-red { background: #ef4444; }
+  .ic-green { background: #10b981; }
+
+  /* ─── PRINT STYLES ─── */
+  @media print {
+    body { background: white; }
+    .cover { min-height: auto; padding-bottom: 40px; }
+  }
+
+  @media (max-width: 640px) {
+    .cover-title { font-size: 36px; }
+    .cover-top, .cover-body, .cover-bottom { padding-left: 28px; padding-right: 28px; }
+    .container { padding: 0 20px 60px; }
+    .problem-grid { grid-template-columns: 1fr; }
+    .outcomes-grid { grid-template-columns: 1fr; }
+    .toc-grid { grid-template-columns: 1fr; }
+    .notif-compare { grid-template-columns: 1fr; }
+    .interview-flow { flex-direction: column; }
+    .if-step::after { display: none; }
+    .toc-section { padding: 40px 24px; }
+    .page-footer { flex-direction: column; gap: 16px; padding: 32px 24px; }
+    .footer-note { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     COVER PAGE
+════════════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-grid"></div>
+  <div class="cover-accent-bar"></div>
+  <div class="cover-circle"></div>
+  <div class="cover-circle-2"></div>
+
+  <div class="cover-top">
+    <div>
+      <div class="org-badge">Virtual Assistant Program</div>
+    </div>
+    <div class="report-date">2026 August Report &nbsp;/ &nbsp;Confidential Internal Report</div>
+  </div>
+
+  <div class="cover-body">
+    <div class="cover-label">Process Improvement Proposal</div>
+    <div class="cover-title">Building a <span>Scalable</span> &amp; People-First Workforce</div>
+    <div class="cover-divider"></div>
+    <div class="cover-subtitle">
+      An operational review of the Virtual Assistant Program with structured recommendations for hiring, training, compensation, workflow centralization, and long-term system design.
+    </div>
+    <div class="cover-meta" style="margin-top: 40px;">
+      <div class="meta-item">
+        <span class="meta-label">Focus Area</span>
+        <span class="meta-value">Operations &amp; Process Design</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Recommendations</span>
+        <span class="meta-value">7 Core Improvements</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Scope</span>
+        <span class="meta-value">Hiring to Retention</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cover-bottom">
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     TABLE OF CONTENTS
+════════════════════════════════════════════ -->
+<div class="toc-section">
+  <div class="toc-inner">
+    <div class="toc-heading">Contents</div>
+    <div class="toc-grid">
+      <a class="toc-item">
+        <span class="toc-num">01</span>
+        <span class="toc-text">Executive Summary</span>
+        <span class="toc-dot"></span>
+      </a>
+      <a class="toc-item">
+        <span class="toc-num">02</span>
+        <span class="toc-text">Current State: Problems Identified</span>
+        <span class="toc-dot"></span>
+      </a>
+      <a class="toc-item">
+        <span class="toc-num">03</span>
+        <span class="toc-text">Hiring: Quality Before Scale</span>
+        <span class="toc-dot"></span>
+      </a>
+      <a class="toc-item">
+        <span class="toc-num">04</span>
+        <span class="toc-text">Structured Training Portal</span>
+        <span class="toc-dot"></span>
+      </a>
+      <a class="toc-item">
+        <span class="toc-num">05</span>
+        <span class="toc-text">Compensation &amp; Retention</span>
+        <span class="toc-dot"></span>
+      </a>
+      <a class="toc-item">
+        <span class="toc-num">06</span>
+        <span class="toc-text">Centralized Communication</span>
+        <span class="toc-dot"></span>
+      </a>
+      <a class="toc-item">
+        <span class="toc-num">07</span>
+        <span class="toc-text">Calendar-Based Meeting Management</span>
+        <span class="toc-dot"></span>
+      </a>
+      <a class="toc-item">
+        <span class="toc-num">08</span>
+        <span class="toc-text">Automated Reporting</span>
+        <span class="toc-dot"></span>
+      </a>
+      <a class="toc-item">
+        <span class="toc-num">09</span>
+        <span class="toc-text">Proposed System Architecture</span>
+        <span class="toc-dot"></span>
+      </a>
+      <a class="toc-item">
+        <span class="toc-num">10</span>
+        <span class="toc-text">Expected Outcomes &amp; Conclusion</span>
+        <span class="toc-dot"></span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     MAIN BODY
+════════════════════════════════════════════ -->
+<div class="container">
+
+  <!-- EXECUTIVE SUMMARY -->
+  <div class="section-wrap">
+    <div class="section-eyebrow">01 &nbsp; Executive Summary</div>
+    <h2 class="section-title">The Foundation Is Strong. The System Needs to Catch Up.</h2>
+    <div class="section-intro">
+      The Virtual Assistant Program has created meaningful career opportunities by connecting healthcare providers with referral partners. As the organization works toward hiring thousands of women, strengthening internal systems becomes as important as increasing recruitment numbers.
+    </div>
+
+    <p>This report is not a criticism of the existing program. It is a strategic proposal for building the infrastructure that will support long-term growth. The observations here are intended to help the organization scale professionally, retain talented individuals, and create a workplace that earns loyalty through fairness, clarity, and structure.</p>
+
+    <p>The core finding is this: the organization is growing faster than its internal systems. That is common in early-stage companies. Revenue grows, hiring grows, clients grow, but processes remain manual. Eventually, employees spend more time managing the process than doing the actual work.</p>
+
+    <div class="callout">
+      <div class="callout-title">Central Message of This Report</div>
+      <p>The current workflow successfully supports business operations, but the increasing number of virtual assistants and the goal of scaling to thousands of team members require a more centralized and streamlined system. Simplifying communication, reporting, and task management can improve productivity, reduce administrative overhead, minimize missed updates, and create a better experience for both employees and management.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CURRENT STATE PROBLEMS -->
+  <div class="section-wrap">
+    <div class="section-eyebrow">02 &nbsp; Current State Analysis</div>
+    <h2 class="section-title">Where the Current Process Creates Friction</h2>
+    <p>Seven distinct friction points were identified. Each one, on its own, is manageable. Together, they create a system that asks too much of individuals and makes it difficult for the organization to grow in a sustainable direction.</p>
+
+    <div class="problem-grid">
+      <div class="problem-card danger">
+        <div class="icon-dot"></div>
+        <div class="problem-num">PROBLEM 01</div>
+        <div class="problem-title">Too Many Roles in One Position</div>
+        <p class="problem-desc">Lead generation, cold calling, LinkedIn management, appointment booking, CRM updates, reports, meetings, and proof uploads: tasks that are typically divided across four or five specialized roles in larger organizations.</p>
+      </div>
+      <div class="problem-card danger">
+        <div class="icon-dot"></div>
+        <div class="problem-num">PROBLEM 02</div>
+        <div class="problem-title">Constant Task Interruption</div>
+        <p class="problem-desc">A Virtual Assistant mid-call receives a Google Chat tag, then a meeting notification, then a manager request. Every interruption breaks concentration and requires mental restarts, increasing both errors and fatigue.</p>
+      </div>
+      <div class="problem-card warn">
+        <div class="icon-dot"></div>
+        <div class="problem-num">PROBLEM 03</div>
+        <div class="problem-title">Too Many Communication Channels</div>
+        <p class="problem-desc">Work is distributed across Google Chat, multiple Google Spaces (8-10), Google Sheets, Google Forms, Canva, LinkedIn, and phone calls. Finding information requires switching between six or seven platforms daily.</p>
+      </div>
+      <div class="problem-card warn">
+        <div class="icon-dot"></div>
+        <div class="problem-num">PROBLEM 04</div>
+        <div class="problem-title">Repetitive Reporting</div>
+        <p class="problem-desc">Daily, weekly, and monthly reports along with referral forms, proof uploads, and screenshots often contain the same information entered multiple times. This is duplicated work that should be automated.</p>
+      </div>
+      <div class="problem-card">
+        <div class="icon-dot"></div>
+        <div class="problem-num">PROBLEM 05</div>
+        <div class="problem-title">Notification Overload</div>
+        <p class="problem-desc">Being added to 8-10 Google Spaces creates a high volume of notifications. Ironically, too many notifications cause employees to ignore them entirely, burying important messages among routine conversations.</p>
+      </div>
+      <div class="problem-card">
+        <div class="icon-dot"></div>
+        <div class="problem-num">PROBLEM 06</div>
+        <div class="problem-title">No Centralized System</div>
+        <p class="problem-desc">Employees must remember where to report, where to upload, where to update, where to communicate, where to check meetings, and where to track leads. This creates unnecessary cognitive load every single day.</p>
+      </div>
+    </div>
+
+    <!-- Interruption Flow Diagram -->
+    <div class="diagram-wrap">
+      <div class="diagram-title">Fig 1.0 — Current Interruption Cycle for a Virtual Assistant</div>
+      <div class="flow-current">
+        <div class="flow-step">VA begins lead generation and cold calling</div>
+        <div class="flow-arrow"></div>
+        <div class="flow-step interrupt"><span class="interrupt-label">Interrupt</span> Tagged in Google Chat for an unrelated update</div>
+        <div class="flow-arrow"></div>
+        <div class="flow-step">Returns to lead generation, loses flow state</div>
+        <div class="flow-arrow"></div>
+        <div class="flow-step interrupt"><span class="interrupt-label">Interrupt</span> Meeting notification with no prior agenda</div>
+        <div class="flow-arrow"></div>
+        <div class="flow-step">Joins meeting unprepared, resumes work after</div>
+        <div class="flow-arrow"></div>
+        <div class="flow-step interrupt"><span class="interrupt-label">Interrupt</span> Manager requests daily progress update via chat</div>
+        <div class="flow-arrow"></div>
+        <div class="flow-step interrupt"><span class="interrupt-label">Interrupt</span> Daily huddle begins, attendance required immediately</div>
+        <div class="flow-arrow"></div>
+        <div class="flow-step" style="background: #fde8e8; border-color: #e05252; color: #842020;">Burnout. Incomplete tasks. Reduced output quality.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- RECOMMENDATION 1: HIRING -->
+  <div class="section-wrap">
+    <div class="section-eyebrow">03 &nbsp; Recommendation One</div>
+    <h2 class="section-title">Build a Quality-Focused Hiring Process</h2>
+
+    <div class="rec-card">
+      <div class="rec-num-badge">01</div>
+      <div class="rec-title">Quality Before Quantity</div>
+      <div class="rec-body">
+        <p>The current interview process selects candidates primarily on communication fluency and lasts under a minute. This overlooks a critical factor: the same hiring pool includes fresh graduates and professionals with five or more years of experience across multiple industries. Treating them identically from day one does not create a fair or effective starting point.</p>
+        <p>Every candidate should be given a minimum of three to five minutes during the interview to introduce themselves, describe their background, share their career goals, and express their interests. This information should be documented and stored so that as employees grow within the organization, they can be placed into roles and departments that match their actual capabilities, creating an internal talent pipeline rather than a flat structure that risks losing skilled individuals.</p>
+      </div>
+    </div>
+
+    <!-- Interview Process Flow -->
+    <div class="diagram-wrap">
+      <div class="diagram-title">Fig 2.0 — Proposed Interview and Onboarding Flow</div>
+      <div class="interview-flow">
+        <div class="if-step if-s1">
+          <div class="if-num">1</div>
+          <div class="if-title">Initial Screen</div>
+          <div class="if-desc">Basic eligibility and communication check</div>
+        </div>
+        <div class="if-step if-s2">
+          <div class="if-num">2</div>
+          <div class="if-title">Structured Interview</div>
+          <div class="if-desc">3-5 minutes: background, goals, experience level</div>
+        </div>
+        <div class="if-step if-s3">
+          <div class="if-num">3</div>
+          <div class="if-title">Profile Documentation</div>
+          <div class="if-desc">Skills, interests, and strengths recorded in system</div>
+        </div>
+        <div class="if-step if-s4">
+          <div class="if-num">4</div>
+          <div class="if-title">Training Assignment</div>
+          <div class="if-desc">Placement based on profile and aptitude</div>
+        </div>
+        <div class="if-step if-s5">
+          <div class="if-num">5</div>
+          <div class="if-title">Talent Pool Entry</div>
+          <div class="if-desc">Candidate tracked for future departmental placement</div>
+        </div>
+      </div>
+    </div>
+
+    <ul class="styled-list">
+      <li><span class="list-dot"></span> Document each candidate's professional history, skills, and stated goals at the time of interview.</li>
+      <li><span class="list-dot"></span> Assign incoming employees to tracks that reflect their experience level rather than treating all hires identically.</li>
+      <li><span class="list-dot"></span> Build an internal talent pool that allows high-performing individuals to grow into specialized or leadership roles.</li>
+      <li><span class="list-dot"></span> Prioritize retention of capable individuals over continuously cycling through new hires.</li>
+    </ul>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- RECOMMENDATION 2: TRAINING PORTAL -->
+  <div class="section-wrap">
+    <div class="section-eyebrow">04 &nbsp; Recommendation Two</div>
+    <h2 class="section-title">Create a Structured Digital Learning Portal</h2>
+
+    <p>Currently, training material is shared through Google Chat on a daily basis. This approach lacks structure, is difficult to revisit, and varies between cohorts depending on who is managing the communication on a given day. A centralized training portal would resolve all of these issues simultaneously.</p>
+
+    <div class="rec-card">
+      <div class="rec-num-badge">02</div>
+      <div class="rec-title">The Learning Portal Model</div>
+      <div class="rec-body">
+        <p>Rather than sending materials through chat, every new hire receives access to a self-paced portal. They are given 15 days to complete the program. The portal is built around a logical sequence of learning, beginning with company context and ending with operational readiness. Each module ends with a short assessment, and the program concludes with a final evaluation before the employee enters live operations.</p>
+        <p>Wherever possible, visual and animated explanations should accompany written content. Pictorial memory embeds faster and more deeply than text alone, which is especially important for employees who are new to healthcare terminology and the referral model.</p>
+      </div>
+    </div>
+
+    <!-- Training Modules -->
+    <div class="diagram-wrap">
+      <div class="diagram-title">Fig 3.0 — Training Portal Module Sequence (15-Day Program)</div>
+
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <div style="display: flex; gap: 10px;">
+          <div style="flex:1; background: #f0fdfa; border: 1px solid #a7f3d0; border-radius: 10px; padding: 16px 18px;">
+            <div style="font-family: 'DM Mono', monospace; font-size: 9px; color: #0d9488; letter-spacing: 2px; margin-bottom: 6px;">MODULE 01 — DAYS 1-2</div>
+            <div style="font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 4px;">Company Mission &amp; Business Model</div>
+            <div style="font-size: 11px; color: var(--text-muted);">Who we are, what we do, and why it matters. How healthcare providers connect with referral partners.</div>
+          </div>
+          <div style="flex:1; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 16px 18px;">
+            <div style="font-family: 'DM Mono', monospace; font-size: 9px; color: #059669; letter-spacing: 2px; margin-bottom: 6px;">MODULE 02 — DAYS 3-4</div>
+            <div style="font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 4px;">Healthcare Terminology</div>
+            <div style="font-size: 11px; color: var(--text-muted);">Medical specialties explained: orthopedics, psychiatry, cardiology, neurology, and more. Animated visual explanations.</div>
+          </div>
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <div style="flex:1; background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 16px 18px;">
+            <div style="font-family: 'DM Mono', monospace; font-size: 9px; color: #d97706; letter-spacing: 2px; margin-bottom: 6px;">MODULE 03 — DAYS 5-7</div>
+            <div style="font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 4px;">VA Responsibilities &amp; SOPs</div>
+            <div style="font-size: 11px; color: var(--text-muted);">Lead generation, cold calling, LinkedIn outreach, appointment booking, and daily workflow expectations.</div>
+          </div>
+          <div style="flex:1; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 10px; padding: 16px 18px;">
+            <div style="font-family: 'DM Mono', monospace; font-size: 9px; color: #2563eb; letter-spacing: 2px; margin-bottom: 6px;">MODULE 04 — DAYS 8-10</div>
+            <div style="font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 4px;">Communication Skills</div>
+            <div style="font-size: 11px; color: var(--text-muted);">Cold calling scripts, professional phone etiquette, objection handling, and outreach best practices.</div>
+          </div>
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <div style="flex:1; background: #f5f3ff; border: 1px solid #ddd6fe; border-radius: 10px; padding: 16px 18px;">
+            <div style="font-family: 'DM Mono', monospace; font-size: 9px; color: #7c3aed; letter-spacing: 2px; margin-bottom: 6px;">MODULE 05 — DAYS 11-12</div>
+            <div style="font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 4px;">CRM &amp; Reporting Procedures</div>
+            <div style="font-size: 11px; color: var(--text-muted);">How to log leads, complete reports, fill referral forms, and use the centralized system efficiently.</div>
+          </div>
+          <div style="flex:1; background: #fdf2f8; border: 1px solid #fbcfe8; border-radius: 10px; padding: 16px 18px;">
+            <div style="font-family: 'DM Mono', monospace; font-size: 9px; color: #be185d; letter-spacing: 2px; margin-bottom: 6px;">MODULE 06 — DAYS 13-15</div>
+            <div style="font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 4px;">Assessment &amp; Final Evaluation</div>
+            <div style="font-size: 11px; color: var(--text-muted);">Module quizzes, final interview, and readiness review before joining live operations.</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 20px; background: var(--navy); border-radius: 10px; padding: 16px 20px; display: flex; align-items: center; gap: 16px;">
+        <div style="width: 10px; height: 10px; border-radius: 50%; background: var(--gold-light); flex-shrink: 0;"></div>
+        <div style="font-size: 12px; color: rgba(255,255,255,0.6);">Each module includes: <strong style="color: rgba(255,255,255,0.9);">Short Visual Lesson</strong> + <strong style="color: rgba(255,255,255,0.9);">Written SOP Document</strong> + <strong style="color: rgba(255,255,255,0.9);">End-of-Module Quiz</strong> before progression is unlocked.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- RECOMMENDATION 3: COMPENSATION -->
+  <div class="section-wrap">
+    <div class="section-eyebrow">05 &nbsp; Recommendation Three</div>
+    <h2 class="section-title">Improve Employee Motivation During the Learning Phase</h2>
+
+    <p>The training program is well-designed and unpaid training is not unusual. However, once employees begin performing live operational work (lead generation, cold calling, LinkedIn outreach, appointment booking, and reporting), they are actively contributing to business outcomes. That contribution deserves recognition.</p>
+
+    <div class="rec-card">
+      <div class="rec-num-badge">03</div>
+      <div class="rec-title">Proposed Compensation Structure</div>
+      <div class="rec-body">
+        <p>Introducing a modest stipend during the first operational month serves multiple purposes: it acknowledges the real work being performed, it reduces early resignations, and it signals to employees that the organization values their contribution from the beginning. When skilled individuals feel undervalued, they leave, regardless of how strong the long-term opportunity appears.</p>
+      </div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="diagram-wrap">
+      <div class="diagram-title">Fig 4.0 — Proposed Employee Journey and Compensation Timeline</div>
+      <div class="timeline-wrap">
+        <div class="timeline-track">
+          <div class="timeline-phase">
+            <div class="timeline-bar phase-1">Days 1-15</div>
+            <div class="timeline-label">
+              <div class="tl-title">Training Portal</div>
+              <div class="tl-sub">Self-paced learning + quizzes</div>
+              <span class="tl-badge badge-unpaid">Unpaid, Learning</span>
+            </div>
+          </div>
+          <div class="timeline-phase">
+            <div class="timeline-bar phase-2">Month 1</div>
+            <div class="timeline-label">
+              <div class="tl-title">Live Operations</div>
+              <div class="tl-sub">Real tasks, supervised work</div>
+              <span class="tl-badge badge-stipend">Stipend</span>
+            </div>
+          </div>
+          <div class="timeline-phase">
+            <div class="timeline-bar phase-3">Month 2</div>
+            <div class="timeline-label">
+              <div class="tl-title">Full VA Role</div>
+              <div class="tl-sub">Independent operations</div>
+              <span class="tl-badge badge-paid">Salary</span>
+            </div>
+          </div>
+          <div class="timeline-phase">
+            <div class="timeline-bar phase-4">Month 3+</div>
+            <div class="timeline-label">
+              <div class="tl-title">Growth Track</div>
+              <div class="tl-sub">Performance-based increase</div>
+              <span class="tl-badge badge-paid">Market Aligned</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout gold">
+      <div class="callout-title">Market Alignment Recommendation</div>
+      <p>Compensation should be periodically reviewed against current market rates. LinkedIn management, cold calling, lead generation, and appointment setting are each individual roles in the market, with salaries ranging from Rs. 45,000 to Rs. 60,000 per position. A Virtual Assistant performing all four responsibilities should be on an accelerated compensation path that reflects this scope.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- RECOMMENDATION 4 & 5: COMMUNICATION -->
+  <div class="section-wrap">
+    <div class="section-eyebrow">06 &nbsp; Recommendation Four</div>
+    <h2 class="section-title">Centralize Communication and Task Management</h2>
+
+    <p>The current state requires employees to monitor and respond across eight to ten Google Spaces simultaneously while completing focused work. This is not a people problem. It is a systems design problem.</p>
+
+    <div class="notif-compare">
+      <div class="notif-box bad">
+        <div class="notif-box-title">Current State</div>
+        <div class="notif-item"><span class="ni-icon ic-red">X</span> 8-10 separate Google Spaces</div>
+        <div class="notif-item"><span class="ni-icon ic-red">X</span> Google Chat for all communication types</div>
+        <div class="notif-item"><span class="ni-icon ic-red">X</span> Meeting invites sent via chat</div>
+        <div class="notif-item"><span class="ni-icon ic-red">X</span> Reports submitted manually via forms</div>
+        <div class="notif-item"><span class="ni-icon ic-red">X</span> Tasks tracked in Google Sheets</div>
+        <div class="notif-item"><span class="ni-icon ic-red">X</span> No agenda shared before meetings</div>
+        <div class="notif-item"><span class="ni-icon ic-red">X</span> No unified place to check priorities</div>
+        <div class="notif-item"><span class="ni-icon ic-red">X</span> Compensation and commission only explained in detail after 15 days of training, leading to resignations when expectations don't match</div>
+      </div>
+      <div class="notif-box good">
+        <div class="notif-box-title">Proposed State</div>
+        <div class="notif-item"><span class="ni-icon ic-green">V</span> One centralized workspace per team</div>
+        <div class="notif-item"><span class="ni-icon ic-green">V</span> Channels organized by purpose, not volume</div>
+        <div class="notif-item"><span class="ni-icon ic-green">V</span> Meetings scheduled via integrated calendar</div>
+        <div class="notif-item"><span class="ni-icon ic-green">V</span> Reports auto-generated from logged activity</div>
+        <div class="notif-item"><span class="ni-icon ic-green">V</span> Tasks assigned and tracked in one dashboard</div>
+        <div class="notif-item"><span class="ni-icon ic-green">V</span> Agenda and prep notes sent with every invite</div>
+        <div class="notif-item"><span class="ni-icon ic-green">V</span> Daily priorities visible on login</div>
+        <div class="notif-item"><span class="ni-icon ic-green">V</span> Salary and benefits communicated transparently right after the interview</div>
+      </div>
+    </div>
+
+    <div class="rec-card">
+      <div class="rec-num-badge">04</div>
+      <div class="rec-title">Work-Hour Boundaries and Calculation</div>
+      <div class="rec-body">
+        <p>A nine-hour workday should remain exactly that. When employees are expected to be available beyond scheduled hours without additional compensation, it creates resentment and burnout. Overtime, when required, should be calculated and compensated. Everything should be tracked, nothing manual, nothing estimated. A centralized system makes this measurable and transparent for both the employee and management.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- RECOMMENDATION 5: MEETINGS -->
+  <div class="section-wrap">
+    <div class="section-eyebrow">07 &nbsp; Recommendation Five</div>
+    <h2 class="section-title">Introduce Calendar-Based Meeting Management</h2>
+
+    <p>When a meeting notification arrives through a busy chat stream while a Virtual Assistant is mid-call, it is frequently missed, not because the employee is disengaged, but because the system does not create the right conditions for awareness. Meetings should be pre-planned, not sudden.</p>
+
+    <div class="diagram-wrap">
+      <div class="diagram-title">Fig 5.0 — Structured Meeting Management Flow</div>
+      <div class="pf-row">
+        <div class="pf-node">
+          <div class="pf-node-label">Step 01</div>
+          <div class="pf-node-title">Manager Schedules Meeting</div>
+        </div>
+        <div class="pf-connector">&#8594;</div>
+        <div class="pf-node">
+          <div class="pf-node-label">Step 02</div>
+          <div class="pf-node-title">Agenda + Prep Docs Attached</div>
+        </div>
+        <div class="pf-connector">&#8594;</div>
+        <div class="pf-node">
+          <div class="pf-node-label">Step 03</div>
+          <div class="pf-node-title">Invites Auto-Sent to Team</div>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: center; padding: 12px 0;">
+        <div style="height: 20px; width: 2px; background: var(--teal); opacity: 0.4;"></div>
+      </div>
+      <div class="pf-row">
+        <div class="pf-node">
+          <div class="pf-node-label">Step 04</div>
+          <div class="pf-node-title">Reminder At Least 10 to 30 Mins Before</div>
+        </div>
+        <div class="pf-connector">&#8594;</div>
+        <div class="pf-node">
+          <div class="pf-node-label">Step 05</div>
+          <div class="pf-node-title">Employee Prepares in Advance</div>
+        </div>
+        <div class="pf-connector">&#8594;</div>
+        <div class="pf-node">
+          <div class="pf-node-label">Step 06</div>
+          <div class="pf-node-title">Meeting Notes Saved to System</div>
+        </div>
+      </div>
+    </div>
+
+    <ul class="styled-list">
+      <li><span class="list-dot"></span> All meetings must include a written agenda before they are sent to attendees.</li>
+      <li><span class="list-dot"></span> Automated reminders delivered via email and system notifications, not chat.</li>
+      <li><span class="list-dot"></span> Meeting notes and action items are stored in the centralized workspace after every session.</li>
+    </ul>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- RECOMMENDATION 6: REPORTING -->
+  <div class="section-wrap">
+    <div class="section-eyebrow">08 &nbsp; Recommendation Six</div>
+    <h2 class="section-title">Automate Reporting to Eliminate Duplicate Work</h2>
+
+    <p>Virtual Assistants currently complete daily reports, end-of-day reports, weekly reports, monthly reports, referral partner forms, proof of work uploads, and screenshot submissions. In many cases, the same data is being entered into multiple formats by hand. This is one of the most direct sources of wasted time in the current workflow.</p>
+
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Report Type</th>
+          <th>Current Process</th>
+          <th>Proposed Process</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Daily Report</td>
+          <td class="current">Manual entry into Google Form or Sheet</td>
+          <td class="proposed">Auto-generated from logged daily activity</td>
+        </tr>
+        <tr>
+          <td>Weekly Summary</td>
+          <td class="current">Compiled manually from daily reports</td>
+          <td class="proposed">System aggregates daily data automatically</td>
+        </tr>
+        <tr>
+          <td>Monthly Report</td>
+          <td class="current">Re-entered and reformatted by VA</td>
+          <td class="proposed">Dashboard generates with one click</td>
+        </tr>
+        <tr>
+          <td>Referral Partner Forms</td>
+          <td class="current">Filled separately via Google Forms</td>
+          <td class="proposed">Pulled from CRM data entered during outreach</td>
+        </tr>
+        <tr>
+          <td>Proof of Work</td>
+          <td class="current">Screenshots uploaded manually to Spaces</td>
+          <td class="proposed">Activity logs serve as verifiable proof automatically</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SYSTEM ARCHITECTURE -->
+  <div class="section-wrap">
+    <div class="section-eyebrow">09 &nbsp; Long-Term Vision</div>
+    <h2 class="section-title">Proposed System Architecture: One Centralized Platform</h2>
+
+    <div class="section-intro">
+      Rather than recommending an existing third-party platform, the strongest long-term recommendation is for the organization to develop its own internal web application. Given the goal of hiring thousands of employees, a custom platform would create a workflow built specifically around the company's operations, and would eliminate dependency on fragmented Google tools entirely.
+    </div>
+
+    <!-- Architecture Diagram -->
+    <div class="diagram-wrap">
+      <div class="diagram-title">Fig 6.0 — Proposed Internal Platform Architecture</div>
+      <div class="arch-wrap">
+
+        <div class="arch-central">
+          <div class="arch-central-label">Core System</div>
+          <div class="arch-central-name">Unified Operations Platform</div>
+        </div>
+
+        <div class="arch-connector-v"></div>
+
+        <div class="arch-row" style="gap: 12px; width: 100%;">
+          <div class="arch-module">
+            <div class="arch-module-icon ic-teal">HR</div>
+            <div class="arch-module-name">Hiring Portal</div>
+            <div class="arch-module-sub">Profiles, interviews, talent pool</div>
+          </div>
+          <div class="arch-module">
+            <div class="arch-module-icon ic-gold">LR</div>
+            <div class="arch-module-name">Learning Portal</div>
+            <div class="arch-module-sub">Modules, quizzes, certifications</div>
+          </div>
+          <div class="arch-module">
+            <div class="arch-module-icon ic-navy">TM</div>
+            <div class="arch-module-name">Task Manager</div>
+            <div class="arch-module-sub">Assignments, priorities, deadlines</div>
+          </div>
+          <div class="arch-module">
+            <div class="arch-module-icon ic-purple">CM</div>
+            <div class="arch-module-name">Communication</div>
+            <div class="arch-module-sub">Organized channels by team</div>
+          </div>
+        </div>
+
+        <div class="arch-connector-v"></div>
+
+        <div class="arch-row" style="gap: 12px; width: 100%;">
+          <div class="arch-module">
+            <div class="arch-module-icon ic-rose">RP</div>
+            <div class="arch-module-name">Auto Reports</div>
+            <div class="arch-module-sub">Daily, weekly, monthly auto-gen</div>
+          </div>
+          <div class="arch-module">
+            <div class="arch-module-icon ic-blue">CL</div>
+            <div class="arch-module-name">Calendar</div>
+            <div class="arch-module-sub">Meetings, agendas, reminders</div>
+          </div>
+          <div class="arch-module">
+            <div class="arch-module-icon ic-teal">CR</div>
+            <div class="arch-module-name">CRM / Leads</div>
+            <div class="arch-module-sub">Lead tracking, referral forms</div>
+          </div>
+          <div class="arch-module">
+            <div class="arch-module-icon ic-gold">PF</div>
+            <div class="arch-module-name">Performance</div>
+            <div class="arch-module-sub">KPIs, compensation, growth track</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <p>Each module feeds into the others. A lead logged in the CRM automatically contributes to daily reports. A completed training module updates the employee's performance profile. A scheduled calendar event sends automated notifications to all relevant team members. Every piece of data entered once flows across the system, never entered twice.</p>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- OUTCOMES -->
+  <div class="section-wrap">
+    <div class="section-eyebrow">10 &nbsp; Expected Outcomes</div>
+    <h2 class="section-title">What These Changes Will Deliver</h2>
+
+    <div class="outcomes-grid">
+      <div class="outcome-cell">
+        <span class="outcome-metric">Higher</span>
+        <span class="outcome-label">Employee satisfaction and day-to-day motivation</span>
+      </div>
+      <div class="outcome-cell">
+        <span class="outcome-metric">Lower</span>
+        <span class="outcome-label">Early resignation and talent loss during onboarding</span>
+      </div>
+      <div class="outcome-cell">
+        <span class="outcome-metric">Faster</span>
+        <span class="outcome-label">Onboarding to operational readiness</span>
+      </div>
+      <div class="outcome-cell">
+        <span class="outcome-metric">Zero</span>
+        <span class="outcome-label">Duplicate data entry across reporting layers</span>
+      </div>
+      <div class="outcome-cell">
+        <span class="outcome-metric">Fewer</span>
+        <span class="outcome-label">Missed meetings and communication breakdowns</span>
+      </div>
+      <div class="outcome-cell">
+        <span class="outcome-metric">Scalable</span>
+        <span class="outcome-label">Infrastructure ready for thousands of employees</span>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">Conclusion</div>
+      <p>The organization has built a meaningful mission: creating professional opportunities and supporting women through structured careers in healthcare services. As the company continues to scale, strengthening internal systems becomes equally important as increasing recruitment numbers. By investing in structured hiring, centralized platforms, process automation, fair compensation, and organized communication, the organization creates a workplace that is efficient, professional, and capable of sustaining growth while providing a genuinely rewarding experience for the people at its core. A great system does not just support the work, it earns the loyalty of the people doing it.</p>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════ -->
+<div class="page-footer">
+  <div class="footer-brand">Virtual Assistant Program<br><span style="font-size:13px; font-family:'DM Sans', sans-serif; font-weight:300; color:rgba(255,255,255,0.4);">Process Improvement Report</span></div>
+  <div class="footer-note">This report has been prepared as an internal operational review. All recommendations are intended to support the organization's long-term goal of building a scalable, employee-first workforce.</div>
+</div>
+
+</body>
+</html>
